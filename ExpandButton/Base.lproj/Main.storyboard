@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fGR-P7-lkp">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ExpandButton" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNF-UZ-qvQ">
+                                <rect key="frame" x="90" y="333" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YZK-l5-7pC" customClass="ExpandingView" customModule="ExpandButton" customModuleProvider="target">
+                                <rect key="frame" x="40" y="323.5" width="40" height="40"/>
+                                <color key="backgroundColor" red="1" green="0.87036508589999995" blue="0.2399876752" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="SUn-Kx-byw"/>
+                                    <constraint firstAttribute="height" constant="40" id="msK-Yv-MpO"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="indicatorColor">
+                                        <color key="value" red="0.21237052610000001" green="0.80784313730000001" blue="0.76470588240000004" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="YZK-l5-7pC" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="APp-Bg-AxC"/>
+                            <constraint firstItem="VNF-UZ-qvQ" firstAttribute="leading" secondItem="YZK-l5-7pC" secondAttribute="trailing" constant="10" id="HHY-em-dYR"/>
+                            <constraint firstItem="YZK-l5-7pC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="TTz-Wa-1Fm"/>
+                            <constraint firstItem="VNF-UZ-qvQ" firstAttribute="centerY" secondItem="YZK-l5-7pC" secondAttribute="centerY" id="woB-xX-jN5"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="expandView" destination="YZK-l5-7pC" id="r1o-4j-wC7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="111" y="19"/>
+        </scene>
+        <!--Types Table View Controller-->
+        <scene sceneID="cmd-6m-K3K">
+            <objects>
+                <tableViewController id="fGR-P7-lkp" customClass="TypesTableViewController" customModule="ExpandButton" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="1YM-Cv-xEH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableViewCell" rowHeight="59" id="1U3-ww-vtT" customClass="TableViewCell" customModule="ExpandButton" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="59"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1U3-ww-vtT" id="tZx-pa-efE">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="58.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Y1-e1-eEn" customClass="ExpandingView" customModule="ExpandButton" customModuleProvider="target">
+                                            <rect key="frame" x="20" y="10.5" width="40" height="40"/>
+                                            <color key="backgroundColor" red="1" green="0.87036508589999995" blue="0.2399876752" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="40" id="80H-EG-XHy"/>
+                                                <constraint firstAttribute="width" constant="40" id="oY2-o7-p9b"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="indicatorColor">
+                                                    <color key="value" red="0.21237052610000001" green="0.80784313730000001" blue="0.76470588240000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="3Y1-e1-eEn" secondAttribute="bottom" constant="10" id="Ped-2R-Ylg"/>
+                                        <constraint firstItem="3Y1-e1-eEn" firstAttribute="top" secondItem="tZx-pa-efE" secondAttribute="top" constant="10" id="ncJ-D3-P0C"/>
+                                        <constraint firstItem="3Y1-e1-eEn" firstAttribute="leading" secondItem="tZx-pa-efE" secondAttribute="leading" constant="20" id="uzO-F4-cDx"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="expandedTextView" destination="3Y1-e1-eEn" id="oBQ-gD-4db"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="fGR-P7-lkp" id="11E-gP-6l7"/>
+                            <outlet property="delegate" destination="fGR-P7-lkp" id="zdq-Kd-Krt"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MBU-9d-jv1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="879" y="18"/>
+        </scene>
+    </scenes>
+</document>
