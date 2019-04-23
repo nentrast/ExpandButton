@@ -40,7 +40,7 @@ class ViewController: UIViewController {
         expandView.addItem(button2)
         expandView.addItem(button3)
         
-        expandView.selectItem(at: 0)
+        expandView.selectItem(0)
     }
 }
 

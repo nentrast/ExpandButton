@@ -14,28 +14,47 @@ class TableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-
+ 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
     }
-
     
     func configure(with viewModel: TableCellViewModel) {
-//        expandedType.forEach({ self.expandedTextView.addItem($0) })
+        viewModel.expandedModel.forEach({expandedTextView.addItem($0) })
+        expandedTextView.delegate = viewModel
+        expandedTextView.selectItem(viewModel.selectedIndex.value)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        expandedTextView.prepareForReuse()
+    }
+
+}
+
+
+class TableCellViewModel: ExpandingViewDelegate {
+    var expandedModel: [ExpandingItem] = [ExpandingItem.init(icon: #imageLiteral(resourceName: "train")),
+                                          ExpandingItem.init(icon: #imageLiteral(resourceName: "plain")),
+                                          ExpandingItem.init(icon: #imageLiteral(resourceName: "plain")),
+                                          ExpandingItem.init(icon: #imageLiteral(resourceName: "train")),
+                                          ExpandingItem.init(icon: #imageLiteral(resourceName: "plain"))]
+    
+    var selectedIndex: Observable<Int> = Observable(objet: 0)
+    
+    func expandingView(_ view: ExpandingView, didSelectItemAt index: Int) {
+        print(index)
+        selectedIndex.value = index
+    }
+    
+    
+    deinit {
+        print("View model deinitd")
     }
 }
 
-
-class TableCellViewModel {
-    var expandedModel: [ExpandingItem] = []
-    var selectedItem: Observable<String> = Observable.init(objet: "")
-    
-}
-
-
+// MARK: - Observalbe
 class Observable<T> {
     var value: T {
         didSet {
@@ -48,5 +67,9 @@ class Observable<T> {
     
     init(objet: T) {
         value = objet
+    }
+    
+    deinit {
+        print("Deinit observable with value: \(value)")
     }
 }

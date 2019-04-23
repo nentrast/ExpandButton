@@ -26,12 +26,14 @@ func + (left: CGPoint, right: CGPoint) -> CGPoint {
 
 protocol ExpandingItemProtocol: class {
     var parrent: ExpandingView? { set get }
+    var title: String? { get set }
+    var icomImage: UIImage? { get set }
     func selected()
     func deselected()
 }
 
 
-    class ExpandingItem: UIControl, ExpandingItemProtocol {
+class ExpandingItem: UIControl, ExpandingItemProtocol {
     
     weak var parrent: ExpandingView?
     
@@ -39,13 +41,14 @@ protocol ExpandingItemProtocol: class {
         didSet {
             circleLayer.backgroundColor = cirlceColor?.cgColor
         }
-        }
+    }
     
     fileprivate let circleLayer = CALayer()
     
     var size: CGFloat = 38
     
     private var _iconImageView: UIImageView? = nil
+    private var _iconIMage: UIImage? = nil
     
     var icomImageView: UIImageView? {
         get {
@@ -59,15 +62,24 @@ protocol ExpandingItemProtocol: class {
         }
     }
     
+    var title: String?
+    
     var icomImage: UIImage? = nil {
         didSet {
+            _iconIMage = icomImage
             icomImageView?.image = icomImage
         }
+    }
+    
+    convenience init(icon: UIImage) {
+        self.init()
+        _iconIMage = icon
     }
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         size = min(frame.size.width, frame.size.height)
+        icomImageView?.image = _iconIMage
         createCilrceLayer()
     }
     
@@ -90,6 +102,7 @@ protocol ExpandingItemProtocol: class {
         if let firstTouch = touches.first {
             if let hitView = self.hitTest(firstTouch.location(in: self), with: event) {
                 sendActions(for: .touchUpInside)
+                print("Touched button")
             }
         }
     }
@@ -120,11 +133,7 @@ enum ExpandingViewState {
         }
     }
     
-    fileprivate var buttonItems: [ExpandingItem] = [] {
-        didSet {
-            print("buttonItems: \(buttonItems)")
-        }
-    }
+    fileprivate var buttonItems: [ExpandingItem] = [] 
     
     fileprivate var selectionIndicatorView = UIView()
     
@@ -146,8 +155,6 @@ enum ExpandingViewState {
     
     private var currentSelectedItem: ExpandingItem?
     private var currentIndex: Int = 0
-    private var lastSelectedIndex: Int?
-    
     
     weak var delegate: ExpandingViewDelegate?
     
@@ -189,6 +196,7 @@ enum ExpandingViewState {
         sendSubviewToBack(selectionIndicatorView)
     }
     
+
     func addItem(_ item: ExpandingItem) {
         let offsetX = buttonItems.count * Int(itemSize) + Int(itemSpace)
         item.frame = CGRect.init(x: CGFloat(offsetX),
@@ -207,16 +215,13 @@ enum ExpandingViewState {
             if let hitView = self.hitTest(firstTouch.location(in: self), with: event) {
                 expand()
                 buttonItems.forEach({ $0.isUserInteractionEnabled = true })
+                print("Touched view")
             }
         }
     }
     
     @objc func didPressItem(_ sender: ExpandingItem) {
         expand()
-        
-        if let lastItem = currentSelectedItem {
-            lastSelectedIndex = buttonItems.firstIndex(of: lastItem)
-        }
         
         let index = buttonItems.firstIndex(of: sender)
         selectItem(at: index ?? 0)
@@ -255,7 +260,7 @@ enum ExpandingViewState {
         let totalWidth = itemSize
         timer?.invalidate()
         buttonItems.forEach({ $0.isUserInteractionEnabled = false })
-
+        
         UIView.animate(withDuration: 0.3, animations: {
             self.frame.size.width = totalWidth
             
@@ -269,8 +274,8 @@ enum ExpandingViewState {
         }
     }
     
-    private func swapItems(firsItem: ExpandingItem, secondItem: ExpandingItem) {
-        UIView.animate(withDuration: 0.3, animations: {
+    private func swapItems(firsItem: ExpandingItem, secondItem: ExpandingItem, duration: TimeInterval = 0.3) {
+        UIView.animate(withDuration: duration, animations: {
             let firstItemFrame = firsItem.frame
             let seconfItemFrame = secondItem.frame
             
@@ -285,10 +290,10 @@ enum ExpandingViewState {
     private func createTimer() {
         self.timer?.invalidate()
         self.timer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(self.shrink), userInfo: nil, repeats: false)
-
+        
     }
     
-    func selectItem(at index: Int) {
+    private func selectItem(at index: Int) {
         guard index < buttonItems.count else { return }
         
         let button = buttonItems[index]
@@ -300,10 +305,28 @@ enum ExpandingViewState {
             self.selectionIndicatorView.frame.origin.x = resultPoint
         }) { (_) in
             button.selected()
+            self.delegate?.expandingView(self, didSelectItemAt: index)
             self.currentSelectedItem = button
             self.currentIndex = index
-            self.delegate?.expandingView(self, didSelectItemAt: index)
         }
+    }
+    
+    func selectItem(_ index: Int) {
+        guard let first = buttonItems.first else { return }
+        let selectedButon = buttonItems[index]
+        selectedButon.selected()
+        
+        buttonItems.forEach({ if $0 != selectedButon { $0.deselected() }})
+
+        swapItems(firsItem: selectedButon, secondItem: first, duration: 0.0)
+    }
+    
+    func prepareForReuse() {
+        shrink()
+        state = .expanded
+        delegate = nil
+        buttonItems.forEach({ $0.removeFromSuperview() })
+        buttonItems.removeAll()
     }
 }
 

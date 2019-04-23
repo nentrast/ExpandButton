@@ -10,45 +10,46 @@ import UIKit
 
 class TypesTableViewController: UITableViewController {
     
-    var models: [ExpandingItem] = []
-
+    var viewModel: [TableCellViewModel] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let button = ExpandingItem.init()
-        button.icomImage = #imageLiteral(resourceName: "plain")
         
-        let button1 = ExpandingItem.init()
-        button1.icomImage = #imageLiteral(resourceName: "plain")
-        
-        
-        let button2 = ExpandingItem.init()
-        button2.icomImage = #imageLiteral(resourceName: "train")
-        
-        let button3 = ExpandingItem.init()
-        button3.icomImage = #imageLiteral(resourceName: "plain")
-        
-        
-        models = [button, button1, button2, button3]
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        viewModel = [TableCellViewModel(),
+                     TableCellViewModel(),
+                     TableCellViewModel(),
+                     TableCellViewModel(),
+                     TableCellViewModel(),
+                     TableCellViewModel(),
+                     TableCellViewModel(),
+                     TableCellViewModel(),
+                     TableCellViewModel(),
+                     TableCellViewModel(),
+                     TableCellViewModel(),
+                     TableCellViewModel(),
+                     TableCellViewModel(),
+                     TableCellViewModel(),
+                     TableCellViewModel(),
+                     TableCellViewModel(),
+                     TableCellViewModel(),
+                     TableCellViewModel(),
+                     TableCellViewModel(),
+                     TableCellViewModel(),
+                     TableCellViewModel()]
     }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 30
+        return viewModel.count
     }
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
         
-//        cell.configure(expandedType: models)
+        cell.configure(with: viewModel[indexPath.row])
 
         // Configure the cell...
 
